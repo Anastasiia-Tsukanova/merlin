@@ -33,8 +33,14 @@ def normalize_label_files(in_lab_file, out_lab_file, label_style, write_time_sta
     out_f = open(out_lab_file,'w')
 
     in_f = open(in_lab_file,'r')
-    data = in_f.readlines()
+    # print(in_f, out_f)
+    tempdata, data = in_f.readlines(), list()
     in_f.close()
+    for i in tempdata:
+        if len(i) > 1:
+            data.append(i)
+        else:
+            break
 
     ph_arr=[]
     for i in data:
@@ -48,6 +54,7 @@ def normalize_label_files(in_lab_file, out_lab_file, label_style, write_time_sta
     merged_data = [[],[],[]]
     for i in data:
         fstr = i.strip().split()
+        # print("!!!", fstr)
         start_time = fstr[0]
         end_time   = fstr[1]
         ftag = fstr[2]
@@ -55,7 +62,7 @@ def normalize_label_files(in_lab_file, out_lab_file, label_style, write_time_sta
         p1 = ftag[0:mid_indx]
         p2 = ftag[mid_indx:]
         ph = ftag[ftag.index('-')+1:ftag.index('+')]
-        #print ph
+        # print(ph)
         if(ph!='pau'):
             count=count+1
         if(prev_ph=='pau' and ph=='pau'):
@@ -74,6 +81,7 @@ def normalize_label_files(in_lab_file, out_lab_file, label_style, write_time_sta
     num_states = 5
     tot_num_ph = len(merged_data[0])
     for j in range(tot_num_ph):
+        # print("merged_data[0][j] = ", merged_data[0][j], "merged_data[1][j] = ", merged_data[1][j], "merged_data[0][j+1] = ", merged_data[0][j+1])
         if j<tot_num_ph-1:
             ph_end = normalize_dur(int(merged_data[0][j+1]))
             merged_data[0][j+1] = str(ph_end)
@@ -81,7 +89,7 @@ def normalize_label_files(in_lab_file, out_lab_file, label_style, write_time_sta
         else:
             end_time = normalize_dur(int(end_time))
             merged_data[1][j]=str(end_time)
-
+        # print("merged_data[0][j] = ", merged_data[0][j], "merged_data[1][j] = ", merged_data[1][j], "merged_data[0][j+1] = ", merged_data[0][j+1])
         if (int(merged_data[1][j])-int(merged_data[0][j]))==0:
             print('Error: zero duration for this phone')
             raise
@@ -111,6 +119,7 @@ if __name__ == "__main__":
     out_lab_dir  = sys.argv[2]
     label_style  = sys.argv[3]
     file_id_list = sys.argv[4]
+    print('Called python normalize_lab_for_merlin.py ' + ' '.join(sys.argv))
 
     write_time_stamps = True
     if len(sys.argv)==6:
@@ -123,6 +132,10 @@ if __name__ == "__main__":
 
     if not os.path.exists(out_lab_dir):
         os.makedirs(out_lab_dir)
+    speakers = [sp for sp in os.listdir(in_lab_dir) if os.path.isdir(os.path.join(in_lab_dir,sp))]
+    for sp in speakers:
+        if not os.path.exists(os.path.join(out_lab_dir,sp)):
+            os.makedirs(os.path.join(out_lab_dir,sp))
 
     in_f = open(file_id_list,'r')
 

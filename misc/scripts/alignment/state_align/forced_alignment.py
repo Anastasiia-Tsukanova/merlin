@@ -16,7 +16,7 @@ HMMDEFS = 'hmmdefs'
 VFLOORS = 'vFloors'
 
 ##
-HTKDIR = path/to/tools/htk
+HTKDIR = "/home/gamatos/merlin_2/tools/bin/htk"
 HCompV = os.path.join(HTKDIR, 'HCompV')
 HCopy  = os.path.join(HTKDIR, 'HCopy' )
 HERest = os.path.join(HTKDIR, 'HERest')
@@ -360,9 +360,9 @@ NUMCEPS = 12
 
 if __name__ == '__main__':
 
-    work_dir = os.getcwd()
+    work_dir = "/home/gamatos/merlin_2/egs/build_your_own_voice/benjamin/database/labels"
 
-    wav_dir = os.path.join(work_dir, 'slt_wav')
+    wav_dir = "/home/gamatos/merlin_2/egs/build_your_own_voice/benjamin/database/wav"
     lab_dir = os.path.join(work_dir, 'label_no_align')
     lab_align_dir = os.path.join(work_dir, 'label_state_align')
 

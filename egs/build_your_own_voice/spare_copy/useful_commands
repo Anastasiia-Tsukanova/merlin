@@ -1,0 +1,3 @@
+python ~/merlin/misc/scripts/frontend/utils/treat_e-lite_labels.py experiments/gottingen_voice/test_synthesis/eLite-generated-lab/ experiments/gottingen_voice/test_synthesis/eLite-gen-lab/ 0
+
+perl ~/merlin/tools/speech_tools/eLiteHTS/eLiteHTS_client_mod.pl experiments/gottingen_voice/test_synthesis/txt/testbonjour.txt texts hts run experiments/gottingen_voice/test_synthesis/eLite-generated-lab/testbonjour.lab
